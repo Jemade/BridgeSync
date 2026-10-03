@@ -10,6 +10,18 @@ BridgeSync accepts an order, saves its durable delivery job in the same transact
 
 ![BridgeSync workspace](docs/screenshots/overview.png)
 
+## Hosted demo access
+
+- Application: [https://bridgesync.onrender.com](https://bridgesync.onrender.com)
+- Health endpoint: [`/api/health`](https://bridgesync.onrender.com/api/health)
+- Sign-in email for the configured administrator: `mapasurejayden@gmail.com`
+- Administrator password: supplied privately to the account owner. It is stored in the Render service's `ADMIN_PASSWORD` environment variable and is not published in this repository.
+- Recruiter or collaborator access: request credentials privately from the project owner.
+
+The hosted interface and health endpoint were verified on 3 October 2026. The current free deployment uses temporary SQLite storage, so application data can reset on instance replacement or redeployment. Persistent PostgreSQL wiring is pending.
+
+The hosted demo uses the included HTTP test connector. Commercial system adapters are separate extensions.
+
 ## Why this project exists
 
 An order should not disappear because a message broker is unavailable. Repeated events should not create repeated business actions. A failed delivery should leave enough history for an operator to understand and recover it. BridgeSync makes those behaviours visible and testable.
