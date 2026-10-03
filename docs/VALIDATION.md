@@ -34,3 +34,9 @@ SQLite's legacy transaction behaviour allowed a released savepoint to persist an
 - Independent security audit, full accessibility audit and broader browser/device coverage.
 
 The browser tests used the local SQLite polling worker, which calls the same claim/delivery function used by Celery. Mock-transport unit tests supplement the live HTTP receiver tests. None of these results imply a production SLA or exactly-once delivery to arbitrary systems.
+
+## Render startup verification
+
+Checked on 3 October 2026: 25 backend tests passed locally on SQLite, including PostgreSQL URL normalization, provider port binding, child-process cleanup after component failure, and graceful platform shutdown. Ruff checks passed. All three browser workflows passed using `python -m app.hosted`; restarting the service retained the account without duplicate seeding.
+
+The hosted startup was checked locally. A live Render deployment is not claimed by these results. The Blueprint requires a dedicated PostgreSQL connection and initial account credentials.

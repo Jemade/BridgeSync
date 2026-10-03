@@ -4,7 +4,7 @@
 
 Order delivery and payment reconciliation for business operations teams.
 
-BridgeSync accepts an order, saves its durable delivery job in the same transaction, delivers it to a business-system connector, and makes failures inspectable. Payment CSVs are compared against order references, amounts and currencies. The interface reads the backend; it has no fabricated dashboard totals.
+BridgeSync accepts an order, saves its durable delivery job in the same transaction, delivers it to a business-system connector, and makes failures inspectable. Payment CSVs are compared against order references, amounts and currencies. The dashboard displays current order, delivery, and reconciliation records.
 
 ![BridgeSync workspace](docs/screenshots/overview.png)
 
@@ -26,11 +26,17 @@ An order should not disappear because a message broker is unavailable. Repeated 
 - Docker Compose configuration for PostgreSQL, Redis, API, worker, scheduler and connector.
 - Database migrations, API documentation, automated backend and browser tests.
 
-## Scope and honesty
+## Integration scope
 
-This is a complete end-to-end portfolio release with an explicitly labelled test connector. It does not claim Shopify, Stripe, QuickBooks or commercial ERP integration. The receiver implements a documented HTTP contract, making a real adapter a separate extension. It is not an audited financial system or a claim of customer adoption.
+The included connector is a test receiver with a documented HTTP contract, idempotency support, and controllable failure modes. Commercial platform adapters are separate extensions. Payment matching currently handles independent full-amount settlements.
 
 Screenshots show actual local execution with seeded demonstration data. The failure controls are available only for the test connector. See [validation](docs/VALIDATION.md) for what was actually verified and what remains to be verified.
+
+## Deploy to Render
+
+[Deploy to Render](https://render.com/deploy?repo=https://github.com/Jemade/BridgeSync)
+
+The Blueprint starts the interface, API, and demonstration worker. Supply a dedicated PostgreSQL database URL and initial account credentials. See [Render deployment](docs/RENDER.md) for startup, persistence, service-plan limits, and verification.
 
 ## Run with Docker Compose
 
@@ -127,7 +133,7 @@ npm run test:e2e
 
 Browser tests require the running API, connector and local worker. Set the test administrator's `ADMIN_EMAIL` and `ADMIN_PASSWORD` in the test shell. The workflow under `.github/workflows` starts these services in CI and runs both SQLite and PostgreSQL test jobs.
 
-## Review this project
+## Documentation
 
 - [Architecture and delivery guarantees](docs/ARCHITECTURE.md)
 - [Three-minute demonstration](docs/DEMO.md)

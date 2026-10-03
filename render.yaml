@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: bridgesync
+    runtime: docker
+    plan: free
+    repo: https://github.com/Jemade/BridgeSync
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerCommand: python -m app.hosted
+    healthCheckPath: /api/health
+    autoDeployTrigger: checksPass
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CONNECTOR_TOKEN
+        generateValue: true
+      - key: CONNECTOR_URL
+        value: http://127.0.0.1:8001/orders
+      - key: MOCK_DATABASE
+        value: /data/connector.db
+      - key: SECURE_COOKIE
+        value: "true"
+      - key: PYTHONUNBUFFERED
+        value: "1"
