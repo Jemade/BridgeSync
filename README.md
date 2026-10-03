@@ -2,6 +2,8 @@
 
 [![Verify BridgeSync](https://github.com/Jemade/BridgeSync/actions/workflows/ci.yml/badge.svg)](https://github.com/Jemade/BridgeSync/actions/workflows/ci.yml)
 
+[Hosted demo](https://bridgesync.onrender.com) · Account sign-in required. The current free demo uses temporary SQLite storage; data can reset when Render restarts the instance.
+
 Order delivery and payment reconciliation for business operations teams.
 
 BridgeSync accepts an order, saves its durable delivery job in the same transaction, delivers it to a business-system connector, and makes failures inspectable. Payment CSVs are compared against order references, amounts and currencies. The dashboard displays current order, delivery, and reconciliation records.
