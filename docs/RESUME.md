@@ -2,13 +2,15 @@
 
 ## Project entry
 
+Repository: [github.com/Jemade/BridgeSync](https://github.com/Jemade/BridgeSync)
+
 **BridgeSync | Python, FastAPI, PostgreSQL, React/TypeScript, Celery, Redis, Docker**
 
 - Built an organisation-scoped order integration and payment reconciliation application with role-based access and an operational dashboard.
 - Implemented transactional order/job persistence, database-enforced duplicate protection, worker leases, bounded retries and an idempotent HTTP test destination.
 - Added exact payment matching, atomic CSV validation, revocable integration keys, audit history and automated correctness/security tests.
 
-Use these bullets only after you have run, understood and can independently modify the project. Describe it as a portfolio product with a test connector. Add the actual GitHub URL and a working demo or recorded walkthrough when available. Do not imply commercial adoption, production throughput or external ERP integrations.
+Use these bullets only after you have run, understood and can independently modify the project. Describe it as a portfolio product with a test connector. Use the GitHub URL above and add a working demo or recorded walkthrough when available. Do not imply commercial adoption, production throughput or external ERP integrations.
 
 ## Interview topics this repository supports
 

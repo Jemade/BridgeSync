@@ -1,5 +1,7 @@
 # BridgeSync
 
+[![Verify BridgeSync](https://github.com/Jemade/BridgeSync/actions/workflows/ci.yml/badge.svg)](https://github.com/Jemade/BridgeSync/actions/workflows/ci.yml)
+
 Order delivery and payment reconciliation for business operations teams.
 
 BridgeSync accepts an order, saves its durable delivery job in the same transaction, delivers it to a business-system connector, and makes failures inspectable. Payment CSVs are compared against order references, amounts and currencies. The interface reads the backend; it has no fabricated dashboard totals.

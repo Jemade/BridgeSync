@@ -4,15 +4,18 @@ Checked on 3 October 2026. Results below describe the actual initial implementat
 
 | Check | Result |
 | --- | --- |
-| Python backend suite | 20 tests passed on SQLite |
-| Browser workflow: sign-in, order, delivery, CSV import, sign-out | Passed against the running API, worker and HTTP receiver |
-| Browser workflow: mobile width, navigation and Escape | Passed at 390 x 844 |
-| Browser workflow: rejection and manual recovery | Passed against the live test connector |
+| Python backend suite | 20 tests passed on SQLite locally and in GitHub Actions; 20 tests passed on PostgreSQL 17 in GitHub Actions |
+| Browser workflow: sign-in, order, delivery, CSV import, sign-out | Passed locally and in GitHub Actions against the running API, worker and HTTP receiver |
+| Browser workflow: mobile width, navigation and Escape | Passed locally and in GitHub Actions at 390 x 844 |
+| Browser workflow: rejection and manual recovery | Passed locally and in GitHub Actions against the live test connector |
 | Browser runtime errors during screenshot capture | None observed |
 | TypeScript checks and production frontend build | Passed |
 | Ruff checks | Passed |
 | Initial Alembic migration against a clean SQLite database | Passed; no pending schema changes detected |
+| PostgreSQL initial migration | Passed in GitHub Actions; no pending schema changes detected |
 | Compose YAML | Parsed; six services configured |
+
+Published source verification: all 61 initial repository files matched the tested local Git blob hashes. [Initial GitHub Actions run](https://github.com/Jemade/BridgeSync/actions/runs/37148637727).
 
 ## Important test coverage
 
@@ -27,7 +30,6 @@ SQLite's legacy transaction behaviour allowed a released savepoint to persist an
 ## Not yet verified in this environment
 
 - Docker image build and the full PostgreSQL/Redis/Celery Compose stack: Docker was unavailable.
-- PostgreSQL runtime test results: a PostgreSQL process could not be started under the available process permissions. The committed GitHub Actions workflow includes PostgreSQL tests and migration verification, but has not run on GitHub yet.
 - Real commercial business-system connectors, third-party API credentials, production load, email delivery or public deployment.
 - Independent security audit, full accessibility audit and broader browser/device coverage.
 
