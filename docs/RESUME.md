@@ -1,0 +1,21 @@
+# Resume and interview evidence
+
+## Project entry
+
+**BridgeSync | Python, FastAPI, PostgreSQL, React/TypeScript, Celery, Redis, Docker**
+
+- Built an organisation-scoped order integration and payment reconciliation application with role-based access and an operational dashboard.
+- Implemented transactional order/job persistence, database-enforced duplicate protection, worker leases, bounded retries and an idempotent HTTP test destination.
+- Added exact payment matching, atomic CSV validation, revocable integration keys, audit history and automated correctness/security tests.
+
+Use these bullets only after you have run, understood and can independently modify the project. Describe it as a portfolio product with a test connector. Add the actual GitHub URL and a working demo or recorded walkthrough when available. Do not imply commercial adoption, production throughput or external ERP integrations.
+
+## Interview topics this repository supports
+
+Explain why the outbox is durable, why dispatch may repeat, how concurrent claims are controlled, and why the destination must deduplicate requests. Discuss transactions, security boundaries, authentication versus authorisation, decimal accounting, failed-job recovery, CSV validation and the limits of independent payment matching.
+
+Show a test rather than only stating a claim. Explain a failed test you investigated, the cause, the implementation fix and the regression check. State which parts are framework behaviour and which business rules were implemented here.
+
+## Personal ownership
+
+The initial implementation was created with coding assistance. Review every module, run its tests and keep a record of your own changes, user feedback and decisions. Follow the exact AI-use rules of any application or assessment. Do not present assisted work as unaided work when that distinction is material.

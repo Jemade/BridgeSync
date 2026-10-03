@@ -1,0 +1,79 @@
+name: Verify BridgeSync
+on: [push, pull_request]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: bridgesync_test
+          POSTGRES_USER: bridge
+          POSTGRES_PASSWORD: ci-password
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U bridge -d bridgesync_test"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    strategy:
+      matrix:
+        database: [sqlite, postgres]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -r backend/requirements-dev.txt
+      - run: ruff check app tests
+        working-directory: backend
+      - name: Test SQLite
+        if: matrix.database == 'sqlite'
+        run: pytest -q
+        working-directory: backend
+      - name: Test PostgreSQL
+        if: matrix.database == 'postgres'
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://bridge:ci-password@localhost:5432/bridgesync_test
+        run: pytest -q
+        working-directory: backend
+      - name: Verify migration
+        env:
+          DATABASE_URL: postgresql+psycopg://bridge:ci-password@localhost:5432/bridgesync_test
+        run: |
+          python -c "from app.db import metadata,engine; metadata.drop_all(engine)"
+          alembic upgrade head
+          alembic check
+        working-directory: backend
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -r backend/requirements-dev.txt
+      - run: npm ci && npm run build && npx playwright install --with-deps chromium
+        working-directory: frontend
+      - name: Start local product
+        working-directory: backend
+        env:
+          CONNECTOR_TOKEN: ci-test-connector-token
+          ADMIN_EMAIL: jayden@example.com
+          ADMIN_PASSWORD: Local-demo-pass-2026
+        run: |
+          alembic upgrade head
+          python -m app.seed --demo
+          uvicorn app.main:app --port 8000 > /tmp/bridgesync-api.log 2>&1 &
+          uvicorn app.mock_connector:app --port 8001 > /tmp/bridgesync-connector.log 2>&1 &
+          python -m app.worker > /tmp/bridgesync-worker.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8000/api/health; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - run: npm run test:e2e
+        working-directory: frontend
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-report
+          path: frontend/playwright-report
