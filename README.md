@@ -182,3 +182,7 @@ A commercial-system adapter; password reset and self-service credential rotation
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks, regression tests and review expectations. Use the issue templates for reproducible bugs or concrete feature proposals.

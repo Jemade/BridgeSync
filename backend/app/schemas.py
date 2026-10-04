@@ -40,3 +40,11 @@ class MemberInput(BaseModel):
 
 class MatchInput(BaseModel):
     order_reference: str = Field(min_length=1, max_length=80)
+
+    @field_validator("order_reference")
+    @classmethod
+    def clean_reference(cls, value):
+        value = value.strip()
+        if not value:
+            raise ValueError("Must not be blank")
+        return value
